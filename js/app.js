@@ -25,3 +25,26 @@ function setFigure(data) {
 }
 
 getWorks();
+/*
+async function getCategories () {
+    const url = "http://localhost:5678/api/categories";
+    try {
+        const response = await fecth(url);
+        if (!response.ok){
+            throw new Error(`Response status: {response.status}`);
+        }
+
+        const json = await response.json();
+        for (let i = 0; i < json; i++){
+            setFilter(json[i]);
+        }
+    }
+    catch (error) {
+        console.error(error.message);
+    }
+}
+
+getCategories(data){
+    const di
+}
+*/
