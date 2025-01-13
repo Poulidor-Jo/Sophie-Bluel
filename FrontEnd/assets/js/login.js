@@ -1,32 +1,43 @@
-document.querySelector("#login-form").addEventListener("submit", async (event) => {
-    event.preventDefault(); // Empêche le rechargement de la page
+const form = document.getElementsByClassName("form-login")[0].elements;
+const messageError = document.getElementById("msg-error");
+const loginURL = "http://localhost:5678/api/users/login";
 
-    const email = document.querySelector("#email").value;
-    const password = document.querySelector("#password").value;
+// Se connecter lorque l'on clic sur le bouton
+form["submit-login"].addEventListener("click",function (event) {
+event.preventDefault();
 
-    try {
-        const response = await fetch("http://localhost:5678/api/users/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password }),
-        });
+  // Validation du formulaire
+  if (form.email.value === "" || form.password.value === "") {
+    messageError.style.display = "flex";
+    return;
+  } else {
+    messageError.style.display = "none";
+  }
 
-        if (response.ok) {
-            const data = await response.json();
-            console.log("Connexion réussie :", data);
-
-            // Stocker le token dans le localStorage
-            localStorage.setItem("authToken", data.token);
-
-            // Rediriger vers une page d'accueil administre 
-            window.location.href = "index.html";
-        } else if (response.status === 401) {
-            alert("Identifiants incorrects. Veuillez réessayer.");
+    fetch(loginURL, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+            email: form.email.value,
+            password: form.password.value,
+        }),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        // Stocker les informations d'authentification et rediriger
+        localStorage.setItem('auth', JSON.stringify(data));
+        const auth = JSON.parse(localStorage.getItem('auth'));
+        if (auth && auth.token) {
+          window.location = "index.html";
         } else {
-            alert("Une erreur est survenue. Veuillez réessayer plus tard.");
+          messageError.style.display = "flex";
         }
-    } catch (error) {
-        console.error("Erreur lors de la connexion :", error.message);
-        alert("Impossible de se connecter au serveur.");
-    }
-});
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      messageError.style.display = "flex";
+    });
+})

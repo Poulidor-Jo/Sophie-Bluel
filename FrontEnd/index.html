@@ -8,44 +8,75 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
+	<script src="https://kit.fontawesome.com/8048b682c0.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="./assets/style.css">
-	<script src="./assets/js/app.js" defer></script>
 </head>
 <body>
 <header>
-	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-	<nav>
+
+	<div class ="mode-edition">
+        <div class="logo-edition">
+            <i class="fa-regular fa-pen-to-square"></i>
+            <p>Mode édition</p>
+        </div>
+        <label id="changements">publier les changements</label>
+    </div>
+
+	<h1 id="logo">Sophie Bluel <span>Architecte d'intérieur</span></h1>
+
+	<nav id="navHeader">
 		<ul>
-			<li>projets</li>
-			<li>contact</li>
-			<li>login</li>
+			<li><a href="index.html#projets" class="submenu">projets</a></li>
+            <li><a href="index.html#contact" class="submenu">contact</a></li>	
+			<li><a href="login.html" class="submenu">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
-	</nav>	
+	</nav>
+
 </header>
 <main>
+
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
+
+			<div class="modifier">
+                <i class="fa-regular fa-pen-to-square"></i>
+                <p>modifier</p>
+            </div>
+
 		</figure>
+
 		<article>
+
+			<div class="modifier" >
+                <i class="fa-regular fa-pen-to-square"></i>
+                <p>modifier</p>
+            </div>
+
 			<h2>Designer d'espace</h2>
+
 			<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
 			<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
 			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
 		</article>
 	</section>
+
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
-		<div class="filters">
-			<!-- Les boutons de filtre seront ajoutés ici dynamiquement via JavaScript -->
+		<div class="projets-modifier">
+			<h2>Mes Projets</h2>
+
+			<div class="modifier" id="projectEdit">
+				<i class="fa-regular fa-pen-to-square"></i>
+				<p>modifier</p>
+			</div>
 		</div>
-		<div class="gallery">
-			<!-- <figure>
-				<img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
-				<figcaption>Abajour Tahina</figcaption>
-			</figure> -->			
+
+		<div id="category">
+			<a href="#" class="subcat active" tabindex="0" onclick="showAllWorks()">Tous </a>
 		</div>
+		<div class="gallery"></div>
+
 	</section>
 	<section id="contact">
 		<h2>Contact</h2>
@@ -69,5 +100,80 @@
 		</ul>
 	</nav>
 </footer>
+
+<!-- Ajout de la partie modal pour admin -->
+<section id="modals">
+
+	<!-- Galerie photo = Ajout ou suppr -->
+	<div id="modalsSuppr">
+		<div class="fermer" id="fermer-suppr">
+			<i class="fa-solid fa-xmark"></i>
+		</div>
+
+		<h2>Galerie photo</h2>
+		<div id="alert" class="alert alert-success" role="alert">
+		</div>
+		<div class="gallerymodal"></div>
+
+		<hr>
+
+		<input type="submit" value="Ajouter une photo" id="AjoutPhoto">
+		<div id="supprgalerie">Supprimer la galerie</div>
+	</div>
+
+	<!-- Ajout Photo-->
+	<div id="modalsAjout">
+		<nav class="navModal">
+			<div class="precedent">
+				<i class="fa-solid fa-arrow-left-long"></i>
+			</div>
+			<div class="fermer" id="fermer-ajout">
+				<i class="fa-solid fa-xmark"></i>
+			</div>
+		</nav>
+
+		<div class="AjoutImageContainer">
+			<h2>Ajout photo</h2>
+
+			<form id="ajout-form" method="post" enctype="multipart/form-data">
+				<div class="AjoutPhotoContainer">
+
+					<div id="previewImage">
+					</div>
+
+					<div id="previewdetails">
+						<i class="fa-regular fa-image"></i>
+						<label for="imageUpload" id="btnImage">+ Ajouter photo</label>
+						<input type="file" accept=".png, .jpg, .jpeg" id="imageUpload">
+						<span>jpg, png : 4mo max</span>
+					</div>
+				</div>
+
+			
+			<div class="AjoutDetail">
+				<label>Titre</label>
+				<input type="text" name="titre" id="titreAjout" required>
+				<label>Catégorie</label>
+				<select name="categorie" id="selectCategorie" required>
+					<option value="1">Objets</option>
+					<option value="2">Appartements</option>
+					<option value="3">Hotels & restaurants</option>
+				</select>
+			</div>
+
+			<hr>
+
+			<input type="submit" value="Valider" id="validerAjout">
+			
+			</form>
+		</div>
+
+	</div>
+</section>
+
+<script src="./assets/JS/function.js"></script>
+<script src="./assets/JS/index.js"></script>
+<script src="./assets/JS/connexion.js"></script>
+<script src="./assets/JS/modal.js"></script>
 </body>
 </html>
