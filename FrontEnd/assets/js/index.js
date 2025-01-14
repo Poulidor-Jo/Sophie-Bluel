@@ -1,157 +1,122 @@
-let allWorks = [];
-let allCategories = [];
+getCategory();
+getWorks();
 
-// Fonction pour récupérer les données de l'API
-const getData = async (collection) => {
-  const url = `http://localhost:5678/api/${collection}`;
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Erreur de réponse : ${response.status}`);
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Erreur lors de la récupération des données :", error.message);
-  }
-};
+// Récupération des catégories via l'API
+function getCategory() {
+    const catUrl = 'http://localhost:5678/api/categories';
+    fetch(catUrl)
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            const fragment = document.createDocumentFragment();
+            let categoryies = data;
 
-// Fonction pour ajouter un travail à la galerie
-const setFigure = (work) => {
-  const gallery = document.querySelector(".gallery");
-  const figure = document.createElement("figure");
-  figure.innerHTML = `
-    <img src="${work.imageUrl}" alt="${work.title}" crossorigin="anonymous">
-    <figcaption>${work.title}</figcaption>`;
-  gallery.appendChild(figure);
-};
+            localStorage.setItem('categoryies', JSON.stringify(data));
+            categoryies.forEach((category) => {
+                const link = document.createElement('a');
+                link.textContent = category.name;
+                link.onclick = function () {
+                    findByCategory(category.id);
+                    link.className.replace('active', '');
+                };
+                link.classList.add("subcat");
+                link.setAttribute("tabindex", "0");
+                fragment.appendChild(link);
+            });
+            const categorie = document.getElementById('category');
+            categorie.appendChild(fragment);
+        })
+}
 
-// Fonction pour créer le menu de filtres
-const createFilterMenu = (categories) => {
-  const filterMenu = document.querySelector("#category"); // Cible le bon élément HTML
+function findByCategory(id) {
+    const works = JSON.parse(localStorage.getItem('worksedit'));
+    let worksList = [];
 
-  if (!filterMenu) {
-    console.error("L'élément #category est introuvable dans le DOM.");
-    return;
-  }
+    works.forEach((work) => {
+        if(work.categoryId == id) {
+            worksList.push(work);
+        }
+    });
+    console.log(worksList);
+    createDocumentWorks(worksList);
+}
 
-  filterMenu.innerHTML = ""; // Nettoie les filtres existants
+// Pour afficher tout les projets sur le filtre "Tous"
+function showAllWorks() {
+    const works = JSON.parse(localStorage.getItem('worksedit'));
+    createDocumentWorks(works);
+}
 
-  console.log("Création des filtres avec catégories :", categories); // Ajout d'un log pour vérifier
+// Récupération des projets de l'API
+function getWorks() {
+    const worksUrl = 'http://localhost:5678/api/works';
 
-  categories.forEach((category) => {
-    const link = document.createElement("a");
-    link.textContent = category.name;
+    fetch(worksUrl)
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            const fragment = document.createDocumentFragment();
+            let works = data;
+            localStorage.setItem('worksedit', JSON.stringify(data));
+            createDocumentWorks(works);
+        })
+}
 
-    link.onclick = () => {
-      document.querySelector(".gallery").innerHTML = ""; // Réinitialise la galerie
-      if (category.id === 0) {
-        allWorks.forEach(setFigure);
-      } else {
-        const filteredWorks = allWorks.filter((work) => work.categoryId === category.id);
-        filteredWorks.forEach(setFigure);
-      }
-    };
+function createDocumentWorks(works) {
+    const fragment = document.createDocumentFragment();
+    const gallery = document.getElementsByClassName('gallery')[0];
 
-    link.classList.add("subcat");
-    link.setAttribute("tabindex", "0");
-    filterMenu.appendChild(link);
-  });
-};
+    gallery.innerHTML = ''; 
+    works.forEach((work) => {
+        const figure = document.createElement('figure');
+        const div = document.createElement('div');
+        const img = document.createElement('img');
 
-// Fonction pour afficher la galerie dans la boîte modale
-const addWorkModal = () => {
-  const galleryModal = document.querySelector(".gallerymodal");
+        img.src = work.imageUrl;
+        img.crossOrigin = 'anonymous';
 
-  if (!galleryModal) {
-    console.error("L'élément .gallerymodal est introuvable dans le DOM.");
-    return;
-  }
+        const caption = document.createElement('figcaption')
+        caption.textContent = work.title;
+        fragment.appendChild(figure);
+        figure.appendChild(div);
+        div.appendChild(img);
+        div.appendChild(caption);
+    })
+    gallery.appendChild(fragment);
+}
 
-  galleryModal.innerHTML = "";
+// Ajout des projets sur la boite modale
+function addWorkModal() {
+    const fragment = document.createDocumentFragment();
+    const galleryModal = document.getElementsByClassName('gallerymodal')[0];
+    galleryModal.innerHTML='';
 
-  allWorks.forEach((work) => {
-    const div = document.createElement("div");
+    const works = JSON.parse(localStorage.getItem('worksedit'));
+
+    works.forEach((work) => {
+    const div = document.createElement('div');
     div.id = "gallery_edit_img";
 
-    const img = document.createElement("img");
+    const img = document.createElement('img');
     img.src = work.imageUrl;
-    img.crossOrigin = "anonymous";
+    img.crossOrigin = 'anonymous';
     div.appendChild(img);
 
-    const trashIcon = document.createElement("i");
-    trashIcon.className = "fa fa-trash";
-    trashIcon.dataset.id = work.id;
-    trashIcon.onclick = () => deleteWork(work.id);
-    div.appendChild(trashIcon);
+    const i = document.createElement('i');
+    i.setAttribute("class", "fa fa-trash");
+    i.setAttribute("data-id", work.id);
+    i.setAttribute("onclick", "deleteWork(this, " + work.id + ")");
+    div.appendChild(i);
 
-    const editText = document.createElement("p");
-    editText.textContent = "éditer";
-    div.appendChild(editText);
+    const p = document.createElement('p');
+    p.textContent = 'éditer';
+    p.setAttribute("data-id", work.id);
+    div.appendChild(p);
 
-    galleryModal.appendChild(div);
-  });
-};
-
-// Fonction pour initialiser l'application
-const init = async () => {
-  const gallery = document.querySelector(".gallery");
-
-  if (!gallery) {
-    console.error("L'élément .gallery est introuvable.");
-    return;
-  }
-
-  gallery.innerHTML = ""; // Nettoie la galerie au démarrage
-
-  try {
-    // Récupération des catégories et des travaux en parallèle
-    const [works, categories] = await Promise.all([getData("works"), getData("categories")]);
-
-    // Vérifiez si les catégories sont récupérées correctement
-    if (!categories || categories.length === 0) {
-      throw new Error("Aucune catégorie récupérée !");
-    }
-
-    // Stockage des données globales
-    allWorks = works;
-    allCategories = [{ id: 0, name: "Tous" }, ...categories];
-
-    console.log("Catégories récupérées :", allCategories); // Vérifie les données des catégories
-
-    // Affichage initial
-    allWorks.forEach(setFigure);
-
-    // Création du menu de filtres
-    createFilterMenu(allCategories);
-
-    console.log("Application initialisée avec succès.");
-  } catch (error) {
-    console.error("Erreur lors de l'initialisation :", error.message);
-  }
-};
-
-// Supprimer un projet
-const deleteWork = async (id) => {
-  try {
-    const response = await fetch(`http://localhost:5678/api/works/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
+    fragment.appendChild(div);
     });
-    if (!response.ok) throw new Error(`Erreur lors de la suppression : ${response.status}`);
-    console.log(`Travail ${id} supprimé`);
-    allWorks = allWorks.filter((work) => work.id !== id);
-    addWorkModal();
-    document.querySelector(".gallery").innerHTML = "";
-    allWorks.forEach(setFigure);
-  } catch (error) {
-    console.error("Erreur lors de la suppression :", error.message);
-  }
-};
-
-// Lancer l'application
-init();
-
-
+  
+    galleryModal.appendChild(fragment);
+}

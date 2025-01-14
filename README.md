@@ -1,9 +1,9 @@
-# Portfolio-architecte-sophie-bluel
+Voici le projet 3 de OpenClassroom sur le site de Sophie Bluel
 
-Code du projet 6 d'intégrateur web.
+![JS](https://github.com/RomainGoujon/OpenClassroom_Projet3_RG/assets/119401399/66d08ee2-8aa4-49a7-8607-d27480fa3b8c)
 
-## Information pour le lancer le code
+Lien maquette: https://www.figma.com/file/kfKHknHySoTibZfdolGAX6/Desktop?type=design&node-id=0-1&mode=design&t=DVup6rRJ4Aso6piO-0
 
- - Lancer le backend depuis votre terminal en suivant les instruction du fichier ReadMe.
- - Si vous désirez afficher le code du backend et du frontend, faites le dans 2 instances de VSCode différentes pour éviter tout problème
-# Sophie-Bluel
+Lien code backend et frontend: https://github.com/OpenClassrooms-Student-Center/Portfolio-architecte-sophie-bluel
+
+Lien Kanban: https://openclassrooms.notion.site/f2555b385cb44bd29d2db49802704969?v=e0a4b060f65c4f6399ff16ab35e69b82
