@@ -120,3 +120,6 @@ function addWorkModal() {
   
     galleryModal.appendChild(fragment);
 }
+
+
+init ();
