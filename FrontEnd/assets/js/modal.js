@@ -71,24 +71,23 @@ window.onclick = function (event) {
 
 // Supprimer des photos
 function deleteWork(event, id) {
-    fetch('http://localhost:5678/api/works/' + id, {
+    fetch(`http://localhost:5678/api/works/${id}` , {
         method: "DELETE",
         headers: {
             'Accept': 'application/json',
             'Authorization': getAuthorization(),
             'Content-Type': 'application/json',
-        },
-        params: {
-            'id': id
-        },
+        }
     })
     .then(() => {
-        const parentDiv = event.parentNode;
+        const removeElements = document.querySelectorAll(`[data-id="${id}"]`);
+        console.log(removeElements);
+       /* const parentDiv = event.parentNode;
         parentDiv.remove();
          const alert = document.getElementById('alert');
          alert.innerHTML = "Votre photo a été supprimé avec succès";
-         alert.style.display = "block";
-         setTimeout(() => { alert.style.display = "none"; }, 5000);
+         alert.style.display = "block"*/
+        // setTimeout(() => { alert.style.display = "none"; }, 5000);
         
     })
     .catch((error) => {

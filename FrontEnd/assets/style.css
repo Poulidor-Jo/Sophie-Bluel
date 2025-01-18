@@ -479,6 +479,16 @@ figure .modifier {
 	font-family: 'Syne';
 }
 
+.delete-btn {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+.work-item {
+	position: relative;
+}
+
 #validerAjout {
 	background-color: #A7A7A7;
 }

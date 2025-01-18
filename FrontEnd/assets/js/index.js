@@ -71,6 +71,7 @@ function createDocumentWorks(works) {
     gallery.innerHTML = ''; 
     works.forEach((work) => {
         const figure = document.createElement('figure');
+        figure.dataset.id = work.id;
         const div = document.createElement('div');
         const img = document.createElement('img');
 
@@ -97,7 +98,8 @@ function addWorkModal() {
 
     works.forEach((work) => {
     const div = document.createElement('div');
-    div.id = "gallery_edit_img";
+    div.dataset.id = work.id;
+    div.classList.add("work-item")
 
     const img = document.createElement('img');
     img.src = work.imageUrl;
@@ -106,14 +108,11 @@ function addWorkModal() {
 
     const i = document.createElement('i');
     i.setAttribute("class", "fa fa-trash");
-    i.setAttribute("data-id", work.id);
-    i.setAttribute("onclick", "deleteWork(this, " + work.id + ")");
+    i.addEventListener('click', function() {
+        deleteWork(this, work.id);
+    });
+    i.classList.add("delete-btn");
     div.appendChild(i);
-
-    const p = document.createElement('p');
-    p.textContent = 'éditer';
-    p.setAttribute("data-id", work.id);
-    div.appendChild(p);
 
     fragment.appendChild(div);
     });
