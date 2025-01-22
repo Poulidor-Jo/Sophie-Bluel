@@ -1,124 +1,151 @@
-getCategory();
-getWorks();
+// Initialisation des variables globales
+let allWorks = [];
+let allCategories = [];
 
-// Récupération des catégories via l'API
-function getCategory() {
-    const catUrl = 'http://localhost:5678/api/categories';
-    fetch(catUrl)
-        .then((response) => {
-            return response.json();
-        })
-        .then((data) => {
-            const fragment = document.createDocumentFragment();
-            let categoryies = data;
+// Fonction d'initialisation principale
+const init = async () => {
+    try {
+        // Charger les données
+        allWorks = await fetchWorks();
+        allCategories = await fetchCategories();
 
-            localStorage.setItem('categoryies', JSON.stringify(data));
-            categoryies.forEach((category) => {
-                const link = document.createElement('a');
-                link.textContent = category.name;
-                link.onclick = function () {
-                    findByCategory(category.id);
-                    link.className.replace('active', '');
-                };
-                link.classList.add("subcat");
-                link.setAttribute("tabindex", "0");
-                fragment.appendChild(link);
+        // Générer les catégories et la galerie
+        renderCategories(allCategories);
+        renderGallery(allWorks);
+
+        // Configurer les événements
+        initializeForm();
+
+        // Signaler que les données sont prêtes
+        document.dispatchEvent(new Event('dataReady'));
+    } catch (error) {
+        console.error("Erreur lors de l'initialisation:", error.message);
+    }
+};
+
+// Fonction pour récupérer les catégories depuis l'API
+const fetchCategories = async () => {
+    const url = 'http://localhost:5678/api/categories';
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Erreur de réponse : ${response.status}`);
+        }
+        const categories = await response.json();
+        localStorage.setItem('categories', JSON.stringify(categories));
+        return categories;
+    } catch (error) {
+        console.error("Erreur lors de la récupération des catégories:", error.message);
+        return [];
+    }
+};
+
+// Fonction pour récupérer les travaux depuis l'API
+const fetchWorks = async () => {
+    const url = 'http://localhost:5678/api/works';
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Erreur de réponse : ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Erreur lors de la récupération des travaux:", error.message);
+        return [];
+    }
+};
+
+// Fonction pour afficher les travaux dans la galerie
+const renderGallery = (works) => {
+    const gallery = document.querySelector(".gallery");
+    if (!gallery) {
+        console.error("Galerie introuvable dans le DOM.");
+        return;
+    }
+    gallery.innerHTML = "";
+    works.forEach(work => {
+        const figure = document.createElement("figure");
+        figure.innerHTML = `
+            <img src="${work.imageUrl}" alt="${work.title}" crossorigin="anonymous">
+            <figcaption>${work.title}</figcaption>`;
+        gallery.appendChild(figure);
+    });
+};
+
+// Fonction pour afficher le menu des catégories
+const renderCategories = (categories) => {
+    const filterMenu = document.querySelector("#category");
+    if (!filterMenu) {
+        console.error("Menu des catégories introuvable dans le DOM.");
+        return;
+    }
+    filterMenu.innerHTML = "";
+
+    // Ajouter le bouton "Tous"
+    const allButton = document.createElement("a");
+    allButton.textContent = "Tous";
+    allButton.onclick = () => renderGallery(allWorks);
+    allButton.classList.add("subcat");
+    filterMenu.appendChild(allButton);
+
+    categories.forEach(category => {
+        const link = document.createElement("a");
+        link.textContent = category.name;
+        link.onclick = () => {
+            const filteredWorks = category.id === 0 
+                ? allWorks 
+                : allWorks.filter(work => work.categoryId === category.id);
+            renderGallery(filteredWorks);
+        };
+        link.classList.add("subcat");
+        filterMenu.appendChild(link);
+    });
+};
+
+// Fonction pour configurer le formulaire d'ajout de projet
+const initializeForm = () => {
+    const form = document.querySelector("#addProjectForm");
+    const errorDiv = document.querySelector("#formError");
+
+    if (!form) {
+        console.error("Formulaire introuvable dans le DOM.");
+        return;
+    }
+
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        errorDiv.textContent = "";
+
+        const formData = new FormData(form);
+        try {
+            const response = await fetch("http://localhost:5678/api/works", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    Authorization: getAuthorizationToken(),
+                },
             });
-            const categorie = document.getElementById('category');
-            categorie.appendChild(fragment);
-        })
-}
 
-function findByCategory(id) {
-    const works = JSON.parse(localStorage.getItem('worksedit'));
-    let worksList = [];
+            if (!response.ok) {
+                throw new Error("Erreur lors de l'ajout du projet");
+            }
 
-    works.forEach((work) => {
-        if(work.categoryId == id) {
-            worksList.push(work);
+            const newWork = await response.json();
+            allWorks.push(newWork);
+            renderGallery(allWorks);
+            form.reset();
+        } catch (error) {
+            errorDiv.textContent = error.message;
         }
     });
-    console.log(worksList);
-    createDocumentWorks(worksList);
-}
+};
 
-// Pour afficher tout les projets sur le filtre "Tous"
-function showAllWorks() {
-    const works = JSON.parse(localStorage.getItem('worksedit'));
-    createDocumentWorks(works);
-}
+// Fonction utilitaire pour obtenir le token d'autorisation
+const getAuthorizationToken = () => {
+    const auth = JSON.parse(localStorage.getItem('auth'));
+    return auth?.token ? `Bearer ${auth.token}` : '';
+};
 
-// Récupération des projets de l'API
-function getWorks() {
-    const worksUrl = 'http://localhost:5678/api/works';
+// Initialiser le script après le chargement du DOM
+document.addEventListener("DOMContentLoaded", init);
 
-    fetch(worksUrl)
-        .then((response) => {
-            return response.json();
-        })
-        .then((data) => {
-            const fragment = document.createDocumentFragment();
-            let works = data;
-            localStorage.setItem('worksedit', JSON.stringify(data));
-            createDocumentWorks(works);
-        })
-}
-
-function createDocumentWorks(works) {
-    const fragment = document.createDocumentFragment();
-    const gallery = document.getElementsByClassName('gallery')[0];
-
-    gallery.innerHTML = ''; 
-    works.forEach((work) => {
-        const figure = document.createElement('figure');
-        figure.dataset.id = work.id;
-        const div = document.createElement('div');
-        const img = document.createElement('img');
-
-        img.src = work.imageUrl;
-        img.crossOrigin = 'anonymous';
-
-        const caption = document.createElement('figcaption')
-        caption.textContent = work.title;
-        fragment.appendChild(figure);
-        figure.appendChild(div);
-        div.appendChild(img);
-        div.appendChild(caption);
-    })
-    gallery.appendChild(fragment);
-}
-
-// Ajout des projets sur la boite modale
-function addWorkModal() {
-    const fragment = document.createDocumentFragment();
-    const galleryModal = document.getElementsByClassName('gallerymodal')[0];
-    galleryModal.innerHTML='';
-
-    const works = JSON.parse(localStorage.getItem('worksedit'));
-
-    works.forEach((work) => {
-    const div = document.createElement('div');
-    div.dataset.id = work.id;
-    div.classList.add("work-item")
-
-    const img = document.createElement('img');
-    img.src = work.imageUrl;
-    img.crossOrigin = 'anonymous';
-    div.appendChild(img);
-
-    const i = document.createElement('i');
-    i.setAttribute("class", "fa fa-trash");
-    i.addEventListener('click', function() {
-        deleteWork(this, work.id);
-    });
-    i.classList.add("delete-btn");
-    div.appendChild(i);
-
-    fragment.appendChild(div);
-    });
-  
-    galleryModal.appendChild(fragment);
-}
-
-
-init ();
