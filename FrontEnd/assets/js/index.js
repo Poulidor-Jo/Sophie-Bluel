@@ -5,9 +5,15 @@ let allCategories = [];
 // Fonction d'initialisation principale
 const init = async () => {
     try {
-        // Charger les données
-        allWorks = await fetchWorks();
-        allCategories = await fetchCategories();
+        // Effectue les deux appels à l'API en parallèle
+        const [works, categories] = await Promise.all([
+            fetchWorks(), // Appel pour récupérer les travaux
+            fetchCategories() // Appel pour récupérer les catégories
+        ]);
+
+        // Met à jour les variables globales
+        allWorks = works;
+        allCategories = categories;
 
         // Générer les catégories et la galerie
         renderCategories(allCategories);
@@ -22,6 +28,7 @@ const init = async () => {
         console.error("Erreur lors de l'initialisation:", error.message);
     }
 };
+
 
 // Fonction pour récupérer les catégories depuis l'API
 const fetchCategories = async () => {

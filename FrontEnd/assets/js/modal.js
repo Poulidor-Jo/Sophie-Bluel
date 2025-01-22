@@ -133,20 +133,28 @@ function deleteWork(event, id) {
 }
 
 // Supprimer toute la galerie
-if (deleteGalleryBtn) deleteGalleryBtn.addEventListener("click", function() {
-    Promise.all(allWorks.map(work => fetch(`http://localhost:5678/api/works/${work.id}`, {
-        method: "DELETE",
-        headers: {
-            'Authorization': getAuthorization(),
+if (deleteGalleryBtn) {
+    deleteGalleryBtn.addEventListener("click", async () => {
+        try {
+            // Génère un tableau de requêtes pour supprimer chaque travail
+            const deleteRequests = allWorks.map(work => fetch(`http://localhost:5678/api/works/${work.id}`, {
+                method: "DELETE",
+                headers: { 'Authorization': getAuthorization() },
+            }));
+
+            // Attends que toutes les suppressions soient terminées
+            await Promise.all(deleteRequests);
+
+            // Vide la liste des travaux et met à jour la galerie
+            allWorks = [];
+            updateGalleryInModal();
+            console.log("Toute la galerie a été supprimée.");
+        } catch (error) {
+            console.error("Erreur lors de la suppression de la galerie :", error);
         }
-    }))).then(() => {
-        allWorks = [];
-        updateGalleryInModal();
-        console.log("Toute la galerie a été supprimée.");
-    }).catch(error => {
-        console.error("Erreur lors de la suppression de la galerie :", error);
     });
-});
+}
+
 
 // Fonction utilitaire pour obtenir l'autorisation
 function getAuthorization() {
