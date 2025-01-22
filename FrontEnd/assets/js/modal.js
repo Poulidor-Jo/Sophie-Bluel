@@ -71,32 +71,29 @@ window.onclick = function (event) {
 // Mettre à jour la galerie dans la modal
 function updateGalleryInModal() {
     const modalGallery = document.querySelector(".gallerymodal");
-    const mainGallery = document.querySelector(".gallery");
 
     if (!modalGallery) {
         console.error("Modal gallery introuvable dans le DOM.");
         return;
     }
     modalGallery.innerHTML = "";
-    if (typeof allWorks !== "undefined" && allWorks.length > 0) {
+    if (allWorks.length > 0) {
         allWorks.forEach(work => {
             const figure = document.createElement("figure");
             figure.setAttribute("data-id", work.id);
             figure.innerHTML = `
                 <img src="${work.imageUrl}" alt="${work.title}" crossorigin="anonymous">
-                <figcaption>${work.title}</figcaption>
-                <button onclick="deleteWork(event, ${work.id})">
-                    <i class="fa-solid fa-trash"></i>
-                </button>`;
+            `;
+            const icon = document.createElement("i");
+            icon.classList.add("fa-solid", "fa-trash");
+            icon.addEventListener("click", function(event) {
+                deleteWork(event, work.id);
+            });
+            figure.appendChild(icon);
             modalGallery.appendChild(figure);
         });
     } else {
         console.log("Aucun travail disponible pour la galerie de la modale.");
-    }
-
-    // Synchroniser avec la galerie principale
-    if (mainGallery) {
-        mainGallery.innerHTML = modalGallery.innerHTML;
     }
 }
 
@@ -131,30 +128,6 @@ function deleteWork(event, id) {
         console.error('Erreur lors de la suppression :', error);
     });
 }
-
-// Supprimer toute la galerie
-if (deleteGalleryBtn) {
-    deleteGalleryBtn.addEventListener("click", async () => {
-        try {
-            // Génère un tableau de requêtes pour supprimer chaque travail
-            const deleteRequests = allWorks.map(work => fetch(`http://localhost:5678/api/works/${work.id}`, {
-                method: "DELETE",
-                headers: { 'Authorization': getAuthorization() },
-            }));
-
-            // Attends que toutes les suppressions soient terminées
-            await Promise.all(deleteRequests);
-
-            // Vide la liste des travaux et met à jour la galerie
-            allWorks = [];
-            updateGalleryInModal();
-            console.log("Toute la galerie a été supprimée.");
-        } catch (error) {
-            console.error("Erreur lors de la suppression de la galerie :", error);
-        }
-    });
-}
-
 
 // Fonction utilitaire pour obtenir l'autorisation
 function getAuthorization() {
