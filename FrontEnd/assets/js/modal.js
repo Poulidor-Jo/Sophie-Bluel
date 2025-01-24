@@ -8,7 +8,6 @@ const modalAddWork = document.querySelector("#modalsAjout");
 const openAddWork = document.querySelector("#AjoutPhoto");
 const previousBtn = document.querySelector(".precedent");
 const closeAddWorkModalBtn = document.querySelector("#fermer-ajout");
-const deleteGalleryBtn = document.querySelector("#supprgalerie");
 
 // Variables pour upload une image
 const uploadImageInput = document.querySelector("#imageUpload");
@@ -134,6 +133,3 @@ function getAuthorization() {
     const auth = JSON.parse(localStorage.getItem('auth'));
     return auth?.token ? `Bearer ${auth.token}` : '';
 }
-
-
-
