@@ -182,7 +182,7 @@ const trySendForm = async (event) => {
     }
 
     // Récupérer les valeurs du formulaire
-    const title = addProjectForm.querySelector("#titreAjout").value;
+    const title = addProjectForm.querySelector("#titleAdd").value;
     const category = addProjectForm.querySelector("#selectCategorie").value;
     const file = uploadImageInput.files[0];
 
