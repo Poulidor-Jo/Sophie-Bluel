@@ -128,10 +128,10 @@ const deleteWork = async (event, id) => {
             throw new Error('Erreur lors de la suppression');
         }
 
-        // Retirer l'élément du DOM dans la modale
+        // Retire l'élément du DOM dans la modale
         document.querySelectorAll(`[data-id="${id}"]`).forEach(el => el.remove());
 
-        // Retirer l'élément de la liste allWorks
+        // Retire l'élément de la liste allWorks
         allWorks = allWorks.filter(work => work.id !== id);
 
         // Synchroniser avec la galerie principale
@@ -238,7 +238,7 @@ const uploadImage = () => {
         uploadContent.style.display = "none";
         submitProjet.style.backgroundColor = "#1D6154";
         projectUpload.style.display = "block";
-        projectUpload.style.backgroundColor = "#FFFFFF"; // Assurez-vous que cette ligne est correcte
+        projectUpload.style.backgroundColor = "#FFFFFF";
 
         // Ajouter l'image à l'aperçu
         projectUpload.innerHTML = ''; // Nettoyer avant d'ajouter une nouvelle image
