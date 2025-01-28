@@ -108,20 +108,24 @@ function updateGalleryInModal() {
 }
 
 // Supprimer des photos
-function deleteWork(event, id) {
-    fetch(`http://localhost:5678/api/works/${id}` , {
-        method: "DELETE",
-        headers: {
-            'Accept': 'application/json',
-            'Authorization': getAuthorization(),
-            'Content-Type': 'application/json',
+const deleteWork = async (event, id) => {
+    try {
+        const response = await fetch(`http://localhost:5678/api/works/${id}`, {
+            method: "DELETE",
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': getAuthorization(),
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Erreur lors de la suppression');
         }
-    })
-    .then(() => {
+
         // Retirer l'élément du DOM dans la modale
-        const removeElements = document.querySelectorAll(`[data-id="${id}"]`);
-        removeElements.forEach(el => el.remove());
-        
+        document.querySelectorAll(`[data-id="${id}"]`).forEach(el => el.remove());
+
         // Retirer l'élément de la liste allWorks
         allWorks = allWorks.filter(work => work.id !== id);
 
@@ -138,11 +142,10 @@ function deleteWork(event, id) {
         }, 5000);
 
         console.log(`Élément avec ID ${id} supprimé.`);
-    })
-    .catch((error) => {
+    } catch (error) {
         console.error('Erreur lors de la suppression :', error);
-    });
-}
+    }
+};
 
 // Fonction pour ajouter des projets
 const sendWorkData = async (data) => {
@@ -155,6 +158,10 @@ const sendWorkData = async (data) => {
         },
         body: data,
     });
+
+    if (!response.ok) {
+        throw new Error('Erreur lors de l\'ajout du projet');
+    }
 
     return response.json();
 };
