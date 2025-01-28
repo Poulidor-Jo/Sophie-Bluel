@@ -128,6 +128,15 @@ function deleteWork(event, id) {
         // Synchroniser avec la galerie principale
         renderGallery(allWorks);
 
+        // Afficher le message de confirmation de suppression
+        const alertDelete = document.getElementById('alertDelete');
+        alertDelete.textContent = "Votre photo a été supprimée avec succès";
+        alertDelete.style.display = "block";
+
+        setTimeout(() => {
+            alertDelete.style.display = "none";
+        }, 5000);
+
         console.log(`Élément avec ID ${id} supprimé.`);
     })
     .catch((error) => {
