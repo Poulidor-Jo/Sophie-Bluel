@@ -1,22 +1,22 @@
 // Variables pour la modal suppression de projets
-const modalDeleteWork = document.querySelector("#modalsSuppr");
+const modalDeleteWork = document.querySelector("#modalSupp");
 const openGalleryModalBtn = document.querySelector("#projectEdit");
-const closeGalleryModalBtn = document.querySelector("#fermer-suppr");
+const closeGalleryModalBtn = document.querySelector("#deleteBtn");
 
 // Variables pour la modal ajout de projets
-const modalAddWork = document.querySelector("#modalsAjout");
-const openAddWork = document.querySelector("#AjoutPhoto");
-const previousBtn = document.querySelector(".precedent");
-const closeAddWorkModalBtn = document.querySelector("#fermer-ajout");
+const modalAddWork = document.querySelector("#modalAdd");
+const openAddWork = document.querySelector("#addPicture");
+const previousBtn = document.querySelector(".previousClic");
+const closeAddWorkModalBtn = document.querySelector("#closeAddModal");
 
 // Variables pour upload une image
 const uploadImageInput = document.querySelector("#imageUpload");
 const projectUpload = document.querySelector("#previewImage");
 const uploadContent = document.querySelector("#previewdetails");
-const submitProjet = document.querySelector("#validerAjout");
-const backgroundPreview = document.querySelector(".AjoutPhotoContainer");
+const submitProjet = document.querySelector("#submitAdd");
+const backgroundPreview = document.querySelector(".add-picture-container");
 
-const addProjectForm = document.querySelector("#ajout-form");
+const addProjectForm = document.querySelector("#addForm");
 
 // Variable pour background modal
 const backgroundModal = document.querySelector("#modals");
@@ -140,7 +140,7 @@ const sendWorkData = async (data) => {
 };
 
 // Fonction pour gérer l'envoi du formulaire
-const handleFormSubmit = async (event) => {
+const trySendForm = async (event) => {
     event.preventDefault();
 
     // Vérifier que tous les champs obligatoires sont remplis
@@ -216,7 +216,7 @@ const uploadImage = () => {
 
 // Écouteurs d'événements pour gérer l'upload de photos et l'envoi du formulaire
 uploadImageInput.addEventListener("change", uploadImage);
-addProjectForm.addEventListener("submit", handleFormSubmit);
+addProjectForm.addEventListener("submit", trySendForm);
 
 // Fonction utilitaire pour obtenir l'autorisation
 function getAuthorization() {

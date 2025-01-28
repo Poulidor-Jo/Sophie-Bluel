@@ -94,8 +94,8 @@
 <section id="modals">
 
 	<!-- Galerie photo = Ajout ou suppr -->
-	<div id="modalsSuppr">
-		<div class="fermer" id="fermer-suppr">
+	<div id="modalSupp">
+		<div class="fermer" id="deleteBtn">
 			<i class="fa-solid fa-xmark"></i>
 		</div>
 
@@ -106,16 +106,16 @@
 
 		<hr>
 
-		<input type="submit" value="Ajouter une photo" id="AjoutPhoto">
+		<input type="submit" value="Ajouter une photo" id="addPicture">
 	</div>
 
 	<!-- Ajout Photo-->
-	<div id="modalsAjout">
+	<div id="modalAdd">
 		<nav class="navModal">
-			<div class="precedent">
+			<div class="previousClic">
 				<i class="fa-solid fa-arrow-left-long"></i>
 			</div>
-			<div class="fermer" id="fermer-ajout">
+			<div class="fermer" id="closeAddModal">
 				<i class="fa-solid fa-xmark"></i>
 			</div>
 		</nav>
@@ -123,8 +123,8 @@
 		<div class="AjoutImageContainer">
 			<h2>Ajout photo</h2>
 
-			<form id="ajout-form" method="post" enctype="multipart/form-data">
-				<div class="AjoutPhotoContainer">
+			<form id="addForm" method="post" enctype="multipart/form-data">
+				<div class="addPictureContainer">
 
 					<div id="previewImage">
 					</div>
@@ -151,7 +151,7 @@
 
 			<hr>
 
-			<input type="submit" value="Valider" id="validerAjout">
+			<input type="submit" value="Valider" id="submitAdd">
 			
 			</form>
 		</div>

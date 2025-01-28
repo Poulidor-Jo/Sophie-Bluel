@@ -445,7 +445,7 @@ figure .modifier {
 	padding-top: 20px;
 }
 
-#modalsSuppr, #modalsAjout {
+#modalSupp, #modalAdd {
 	display: none;
 	border-radius: 10px;
 	background-color: #FFFFFF;
@@ -472,7 +472,7 @@ figure .modifier {
 	font-weight: 400;
 }
 
-#AjoutPhoto, #validerAjout, #supprgalerie {
+#addPicture, #submitAdd, #supprgalerie {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -489,7 +489,7 @@ figure .modifier {
 	position: relative;
 }
 
-#validerAjout {
+#submitAdd {
 	background-color: #A7A7A7;
 }
 
@@ -557,7 +557,7 @@ figcaption {
 	justify-content: space-between;
 }
 
-.precedent {
+.previousClic {
 	color: black;
 	font-size: 25px;
 }
@@ -571,7 +571,7 @@ figcaption {
 	align-items: center;
 }
 
-.AjoutPhotoContainer {
+.addPictureContainer {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -664,7 +664,7 @@ figcaption {
 	background-color: white;
 }
 
-#ajout-form {
+#addForm {
 	width: 80%;
 	display: flex;
 	flex-direction: column;
