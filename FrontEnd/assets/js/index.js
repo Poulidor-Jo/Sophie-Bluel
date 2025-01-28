@@ -29,7 +29,6 @@ const init = async () => {
     }
 };
 
-
 // Fonction pour récupérer les catégories depuis l'API
 const fetchCategories = async () => {
     const url = 'http://localhost:5678/api/categories';
