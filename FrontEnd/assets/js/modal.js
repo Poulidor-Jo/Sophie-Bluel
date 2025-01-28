@@ -21,13 +21,14 @@ const addProjectForm = document.querySelector("#addForm");
 // Variable pour background modal
 const backgroundModal = document.querySelector("#modals");
 
-// Fonction pour ouvrir modal galerie pour supprimer un projet et celle pour ajouter un projet
+// Fonction pour ouvrir la modal galerie pour supprimer un projet
 function openGalleryModal() {
     modalDeleteWork.style.display = "flex";
     backgroundModal.style.display = "block";
     updateGalleryInModal();
 }
 
+// Fonction pour ouvrir la modal d'ajout de projet
 function openAddWorkModal() {
     modalAddWork.style.display = "flex";
     backgroundModal.style.display = "block";
@@ -43,26 +44,29 @@ function resetAddWorkModal() {
     alert.style.display = "none";
 }
 
-// Fonction pour fermeture de la modal
+// Fonction pour fermer la modal galerie
 function closeGalleryModal() {
     modalDeleteWork.style.display = "none";
     backgroundModal.style.display = "none";
 }
 
+// Fonction pour fermer la modal d'ajout de projet
 function closeAddWorkModal() {
     modalAddWork.style.display = "none";
     backgroundModal.style.display = "none";
     resetAddWorkModal();
 }
 
-// Ouvrir la modal
+// Ouvrir la modal galerie
 if (openGalleryModalBtn) openGalleryModalBtn.addEventListener("click", openGalleryModal);
+
+// Ouvrir la modal d'ajout de projet
 if (openAddWork) openAddWork.addEventListener("click", function() {
     closeGalleryModal();
     openAddWorkModal();
 });
 
-// Fermer la modal et précédent
+// Fermer la modal galerie et revenir à la précédente
 if (closeGalleryModalBtn) closeGalleryModalBtn.addEventListener("click", closeGalleryModal);
 if (closeAddWorkModalBtn) closeAddWorkModalBtn.addEventListener("click", closeAddWorkModal);
 
@@ -71,6 +75,7 @@ if (previousBtn) previousBtn.addEventListener("click", function() {
     openGalleryModal();
 });
 
+// Fermer la modal si l'utilisateur clique en dehors
 window.onclick = function (event) {
     if (event.target == backgroundModal) {
         closeAddWorkModal();
