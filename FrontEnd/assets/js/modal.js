@@ -33,6 +33,14 @@ function openAddWorkModal() {
     backgroundModal.style.display = "block";
 }
 
+// Fonction pour réinitialiser la modal d'ajout de photo
+function resetAddWorkModal() {
+    addProjectForm.reset();
+    uploadContent.style.display = "block";
+    projectUpload.style.display = "none";
+    submitProjet.style.backgroundColor = "#A7A7A7";
+}
+
 // Fonction pour fermeture de la modal
 function closeGalleryModal() {
     modalDeleteWork.style.display = "none";
@@ -42,6 +50,7 @@ function closeGalleryModal() {
 function closeAddWorkModal() {
     modalAddWork.style.display = "none";
     backgroundModal.style.display = "none";
+    resetAddWorkModal();
 }
 
 // Ouvrir la modal
