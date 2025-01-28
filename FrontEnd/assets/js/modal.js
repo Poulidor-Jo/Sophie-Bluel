@@ -19,7 +19,7 @@ const backgroundPreview = document.querySelector(".addPictureContainer");
 const addProjectForm = document.querySelector("#addForm");
 
 // Variable pour background modal
-const backGroundModal = document.querySelector("#modals");
+const backGroundModal = document.querySelector("#bckGroundModal");
 
 // Fonction pour ouvrir la modal galerie pour supprimer un projet
 function openGalleryModal() {

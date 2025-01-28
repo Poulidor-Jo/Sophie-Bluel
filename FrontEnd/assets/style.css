@@ -428,7 +428,7 @@ figure .modifier {
 /* Page admin modal */
 
 
-#modals {
+#bckGroundModal {
 	display: none;
 	position: fixed; 
 	left: 0;
@@ -466,7 +466,7 @@ figure .modifier {
 	font-size: 25px;
 }
 
-#modals h2 {
+#bckGroundModal h2 {
 	display: flex;
 	justify-content: center;
 	font-size: 30px;
