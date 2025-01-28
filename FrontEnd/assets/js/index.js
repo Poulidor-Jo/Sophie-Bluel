@@ -129,7 +129,7 @@ const initializeForm = () => {
                 method: "POST",
                 body: formData,
                 headers: {
-                    Authorization: getAuthorizationToken(),
+                    Authorization: getAuthorization(),
                 },
             });
 
@@ -145,12 +145,6 @@ const initializeForm = () => {
             errorDiv.textContent = error.message;
         }
     });
-};
-
-// Fonction utilitaire pour obtenir le token d'autorisation
-const getAuthorizationToken = () => {
-    const auth = JSON.parse(localStorage.getItem('auth'));
-    return auth?.token ? `Bearer ${auth.token}` : '';
 };
 
 // Initialiser le script après le chargement du DOM

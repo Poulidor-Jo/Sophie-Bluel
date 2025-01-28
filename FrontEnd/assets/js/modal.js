@@ -217,9 +217,3 @@ const uploadImage = () => {
 // Écouteurs d'événements pour gérer l'upload de photos et l'envoi du formulaire
 uploadImageInput.addEventListener("change", uploadImage);
 addProjectForm.addEventListener("submit", trySendForm);
-
-// Fonction utilitaire pour obtenir l'autorisation
-function getAuthorization() {
-    const auth = JSON.parse(localStorage.getItem('auth'));
-    return auth?.token ? `Bearer ${auth.token}` : '';
-}
