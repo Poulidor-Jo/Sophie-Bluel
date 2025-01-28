@@ -39,6 +39,8 @@ function resetAddWorkModal() {
     uploadContent.style.display = "block";
     projectUpload.style.display = "none";
     submitProjet.style.backgroundColor = "#A7A7A7";
+    const alert = document.getElementById('alertAdd');
+    alert.style.display = "none";
 }
 
 // Fonction pour fermeture de la modal
@@ -180,7 +182,7 @@ const trySendForm = async (event) => {
         const response = await sendWorkData(formData);
         console.log(response);
 
-        const alert = document.getElementById('alert');
+        const alert = document.getElementById('alertAdd');
         alert.textContent = "Votre photo a été ajoutée avec succès";
         alert.style.display = "block";
 
