@@ -14,24 +14,24 @@ const uploadImageInput = document.querySelector("#imageUpload");
 const projectUpload = document.querySelector("#previewImage");
 const uploadContent = document.querySelector("#previewdetails");
 const submitProjet = document.querySelector("#submitAdd");
-const backgroundPreview = document.querySelector(".add-picture-container");
+const backgroundPreview = document.querySelector(".addPictureContainer");
 
 const addProjectForm = document.querySelector("#addForm");
 
 // Variable pour background modal
-const backgroundModal = document.querySelector("#modals");
+const backGroundModal = document.querySelector("#modals");
 
 // Fonction pour ouvrir la modal galerie pour supprimer un projet
 function openGalleryModal() {
     modalDeleteWork.style.display = "flex";
-    backgroundModal.style.display = "block";
+    backGroundModal.style.display = "block";
     updateGalleryInModal();
 }
 
 // Fonction pour ouvrir la modal d'ajout de projet
 function openAddWorkModal() {
     modalAddWork.style.display = "flex";
-    backgroundModal.style.display = "block";
+    backGroundModal.style.display = "block";
 }
 
 // Fonction pour réinitialiser la modal d'ajout de photo
@@ -47,13 +47,13 @@ function resetAddWorkModal() {
 // Fonction pour fermer la modal galerie
 function closeGalleryModal() {
     modalDeleteWork.style.display = "none";
-    backgroundModal.style.display = "none";
+    backGroundModal.style.display = "none";
 }
 
 // Fonction pour fermer la modal d'ajout de projet
 function closeAddWorkModal() {
     modalAddWork.style.display = "none";
-    backgroundModal.style.display = "none";
+    backGroundModal.style.display = "none";
     resetAddWorkModal();
 }
 
@@ -77,7 +77,7 @@ if (previousBtn) previousBtn.addEventListener("click", function() {
 
 // Fermer la modal si l'utilisateur clique en dehors
 window.onclick = function (event) {
-    if (event.target == backgroundModal) {
+    if (event.target == backGroundModal) {
         closeAddWorkModal();
         closeGalleryModal();
     }
