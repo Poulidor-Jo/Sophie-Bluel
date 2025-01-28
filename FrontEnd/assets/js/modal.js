@@ -206,7 +206,7 @@ const uploadImage = () => {
         uploadContent.style.display = "none";
         submitProjet.style.backgroundColor = "#1D6154";
         projectUpload.style.display = "block";
-        backgroundPreview.style.backgroundColor = "#FFFFFF";
+        projectUpload.style.backgroundColor = "#FFFFFF"; // Assurez-vous que cette ligne est correcte
 
         // Ajouter l'image à l'aperçu
         projectUpload.innerHTML = ''; // Nettoyer avant d'ajouter une nouvelle image
