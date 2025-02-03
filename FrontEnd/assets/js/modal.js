@@ -171,12 +171,36 @@ const sendWorkData = async (data) => {
     return response.json();
 };
 
+// Fonction pour vérifier si tous les champs du formulaire sont remplis
+function isFormValid() {
+    const title = addProjectForm.querySelector("#titleAdd").value;
+    const category = addProjectForm.querySelector("#selectCategorie").value;
+    const file = uploadImageInput.files[0];
+    return title && category && file;
+}
+
+// Fonction pour mettre à jour l'état du bouton de soumission
+function updateSubmitButtonState() {
+    if (isFormValid()) {
+        submitProjet.style.backgroundColor = "#1D6154";
+        submitProjet.disabled = false;
+    } else {
+        submitProjet.style.backgroundColor = "#A7A7A7";
+        submitProjet.disabled = true;
+    }
+}
+
+// Ajouter des écouteurs d'événements pour chaque champ du formulaire
+addProjectForm.querySelector("#titleAdd").addEventListener("input", updateSubmitButtonState);
+addProjectForm.querySelector("#selectCategorie").addEventListener("change", updateSubmitButtonState);
+uploadImageInput.addEventListener("change", updateSubmitButtonState);
+
 // Fonction pour gérer l'envoi du formulaire
 const trySendForm = async (event) => {
     event.preventDefault();
 
     // Vérifier que tous les champs obligatoires sont remplis
-    if (!addProjectForm.checkValidity()) {
+    if (!isFormValid()) {
         alert("Veuillez remplir tous les champs obligatoires.");
         return;
     }
@@ -185,12 +209,6 @@ const trySendForm = async (event) => {
     const title = addProjectForm.querySelector("#titleAdd").value;
     const category = addProjectForm.querySelector("#selectCategorie").value;
     const file = uploadImageInput.files[0];
-
-    // Vérifier si un fichier est sélectionné
-    if (!file) {
-        alert("Veuillez sélectionner une image.");
-        return;
-    }
 
     // Créer un objet FormData pour envoyer les données
     const formData = new FormData();
@@ -211,11 +229,15 @@ const trySendForm = async (event) => {
         allWorks.push(response);
         renderGallery(allWorks);
 
+        // Réinitialiser le formulaire
+        resetAddWorkModal();
+
         setTimeout(() => {
             alert.style.display = "none";
         }, 5000);
     } catch (error) {
         console.error("Erreur :", error);
+        alert("Erreur lors de l'ajout du projet. Veuillez réessayer.");
     }
 };
 
@@ -236,7 +258,6 @@ const uploadImage = () => {
 
         // Mettre à jour l'interface utilisateur
         uploadContent.style.display = "none";
-        submitProjet.style.backgroundColor = "#1D6154";
         projectUpload.style.display = "block";
         projectUpload.style.backgroundColor = "#FFFFFF";
 
@@ -244,6 +265,9 @@ const uploadImage = () => {
         projectUpload.innerHTML = ''; // Nettoyer avant d'ajouter une nouvelle image
         projectUpload.appendChild(image);
     }
+
+    // Mettre à jour l'état du bouton de soumission
+    updateSubmitButtonState();
 };
 
 // Écouteurs d'événements pour gérer l'upload de photos et l'envoi du formulaire
