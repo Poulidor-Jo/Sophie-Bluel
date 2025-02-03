@@ -621,6 +621,10 @@ figcaption {
 	justify-self: center;
 }
 
+#previewDetails.hide-icon i {
+    display: none;
+}
+
 #imageUpload {
 	display: none;
 }

@@ -42,6 +42,7 @@ function resetAddWorkModal() {
     submitProjet.style.backgroundColor = "#A7A7A7";
     const alert = document.getElementById('alertAdd');
     alert.style.display = "none";
+    uploadContent.classList.remove("hide-icon"); // Réafficher l'icône de prévisualisation
 }
 
 // Fonction pour fermer la modal galerie
@@ -264,6 +265,9 @@ const uploadImage = () => {
         // Ajouter l'image à l'aperçu
         projectUpload.innerHTML = ''; // Nettoyer avant d'ajouter une nouvelle image
         projectUpload.appendChild(image);
+
+        // Masquer l'icône de prévisualisation
+        uploadContent.classList.add("hide-icon");
     }
 
     // Mettre à jour l'état du bouton de soumission
