@@ -12,7 +12,7 @@ const closeAddWorkModalBtn = document.querySelector("#closeAddModal");
 // Variables pour upload une image
 const uploadImageInput = document.querySelector("#imageUpload");
 const projectUpload = document.querySelector("#previewImage");
-const uploadContent = document.querySelector("#previewdetails");
+const uploadContent = document.querySelector("#previewDetails");
 const submitProjet = document.querySelector("#submitAdd");
 const backgroundPreview = document.querySelector(".addPictureContainer");
 

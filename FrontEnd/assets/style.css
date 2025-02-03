@@ -593,26 +593,26 @@ figcaption {
 	max-height: 100%;
 }
 
-#previewdetails {
+#previewDetails {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
 
-#previewdetails i {
+#previewDetails i {
 	font-size: 90px;
 	padding: 1.5rem 0;
 	color: #B9C5CC;
 }
 
-#previewdetails span {
+#previewDetails span {
 	font-family: 'Syne';
 	font-size: 10px;
 	padding-bottom: 2rem;
 	color: #444444;
 }
 
-#previewdetails img {
+#previewDetails img {
 	object-fit: scale-down;
 	width: 50%;
 	display: flex;
