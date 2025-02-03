@@ -37,7 +37,7 @@ function openAddWorkModal() {
 // Fonction pour réinitialiser la modal d'ajout de photo
 function resetAddWorkModal() {
     addProjectForm.reset();
-    uploadContent.style.display = "block";
+    uploadContent.style.display = "flex"; // Assurez-vous que le conteneur utilise flex
     projectUpload.style.display = "none";
     submitProjet.style.backgroundColor = "#A7A7A7";
     const alert = document.getElementById('alertAdd');
@@ -257,7 +257,7 @@ const uploadImage = () => {
         reader.readAsDataURL(file);
 
         // Mettre à jour l'interface utilisateur
-        uploadContent.style.display = "none";
+        uploadContent.style.display = "flex"; // Assurez-vous que le conteneur utilise flex
         projectUpload.style.display = "block";
         projectUpload.style.backgroundColor = "#FFFFFF";
 

@@ -580,6 +580,7 @@ figcaption {
 	align-items: center;
 	background-color: #E8F1F6;
 	width: 80%;
+	margin-bottom: 15px;
 }
 
 #previewImage {
@@ -597,6 +598,7 @@ figcaption {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	background-color: #E8F1F6;
 }
 
 #previewDetails i {
@@ -644,7 +646,7 @@ figcaption {
 }
 
 .AjoutDetail label {
-	font-size: 14px;
+	font-size: 18px;
 }
 
 #titleAdd {
