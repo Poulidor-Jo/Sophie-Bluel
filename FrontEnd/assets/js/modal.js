@@ -223,28 +223,30 @@ const trySendForm = async (event) => {
         const response = await sendWorkData(formData);
         console.log(response);
 
+        // Mettre à jour la galerie principale
+        allWorks.push(response);
+        renderGallery(allWorks);
+
+        // Mettre à jour la galerie dans la modal
+        updateGalleryInModal();
+
+        // Réinitialiser le formulaire
+        resetAddWorkModal();
+
+        // Afficher le message de confirmation
         const alert = document.getElementById('alertAdd');
         if (alert) {
             alert.classList.add('alert-success');
             alert.textContent = "Votre photo a été ajoutée avec succès";
             alert.style.display = "block";
             console.log("Message de confirmation affiché");
+
+            setTimeout(() => {
+                alert.style.display = "none";
+            }, 5000);
         } else {
             console.error("Élément #alertAdd introuvable dans le DOM.");
         }
-
-        // Mettre à jour la galerie principale
-        allWorks.push(response);
-        renderGallery(allWorks);
-
-        // Réinitialiser le formulaire
-        resetAddWorkModal();
-
-        setTimeout(() => {
-            if (alert) {
-                alert.style.display = "none";
-            }
-        }, 5000);
     } catch (error) {
         console.error("Erreur :", error);
         const alert = document.getElementById('alertAdd');
