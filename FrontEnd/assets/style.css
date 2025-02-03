@@ -351,7 +351,7 @@ a:active {
 	flex-direction: row;
 	gap: 10px;
 	align-items: center;
-	border: 1px solid red;
+	border: 1px solid;
 	border-radius: 60px;
 	background-color: red;
 	color: white;
@@ -440,7 +440,7 @@ figure .modifier {
 	justify-content: center; 
 	align-items: center; 
 	padding: 0; 
-	overflow: hidden; /
+	overflow: hidden;
 }
 
 .AjoutImageContainer h2 {
@@ -586,7 +586,6 @@ figcaption {
 #previewImage {
 	width: 13rem;
 	display: none;
-	padding-bottom: 18px;
 }
 
 #previewImage img {
