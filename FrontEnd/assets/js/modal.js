@@ -240,7 +240,9 @@ const trySendForm = async (event) => {
         }, 5000);
     } catch (error) {
         console.error("Erreur :", error);
-        alert("Erreur lors de l'ajout du projet. Veuillez réessayer.");
+        const alert = document.getElementById('alertAdd');
+        alert.textContent = "Erreur lors de l'ajout du projet. Veuillez réessayer.";
+        alert.style.display = "block";
     }
 };
 
