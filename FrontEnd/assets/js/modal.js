@@ -37,7 +37,7 @@ function openAddWorkModal() {
 // Fonction pour réinitialiser la modal d'ajout de photo
 function resetAddWorkModal() {
     addProjectForm.reset();
-    uploadContent.style.display = "flex"; // Assurez-vous que le conteneur utilise flex
+    uploadContent.style.display = "flex"; 
     projectUpload.style.display = "none";
     submitProjet.style.backgroundColor = "#A7A7A7";
     const alert = document.getElementById('alertAdd');
@@ -140,6 +140,7 @@ const deleteWork = async (event, id) => {
 
         // Afficher le message de confirmation de suppression
         const alertDelete = document.getElementById('alertDelete');
+        alertDelete.classList.add('alert-delete');
         alertDelete.textContent = "Votre photo a été supprimée avec succès";
         alertDelete.style.display = "block";
 
@@ -223,6 +224,7 @@ const trySendForm = async (event) => {
         console.log(response);
 
         const alert = document.getElementById('alertAdd');
+        alert.classList.add('alert-success');
         alert.textContent = "Votre photo a été ajoutée avec succès";
         alert.style.display = "block";
 
