@@ -247,6 +247,20 @@ const uploadImage = () => {
     const file = uploadImageInput.files?.[0];
 
     if (file) {
+        // Vérifier le format de l'image
+        const validFormats = ["image/jpeg", "image/png"];
+        if (!validFormats.includes(file.type)) {
+            alert("Format de fichier non valide. Veuillez télécharger une image au format JPG ou PNG.");
+            return;
+        }
+
+        // Vérifier le poids de l'image (4 Mo max)
+        const maxSize = 4 * 1024 * 1024; // 4 Mo
+        if (file.size > maxSize) {
+            alert("Le fichier est trop volumineux. La taille maximale autorisée est de 4 Mo.");
+            return;
+        }
+
         const reader = new FileReader();
         const image = new Image();
 
@@ -258,7 +272,7 @@ const uploadImage = () => {
         reader.readAsDataURL(file);
 
         // Mettre à jour l'interface utilisateur
-        uploadContent.style.display = "flex"; // Assurez-vous que le conteneur utilise flex
+        uploadContent.style.display = "flex";
         projectUpload.style.display = "block";
         projectUpload.style.backgroundColor = "#FFFFFF";
 
