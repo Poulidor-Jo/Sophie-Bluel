@@ -19,9 +19,6 @@ const init = async () => {
         renderCategories(allCategories);
         renderGallery(allWorks);
 
-        // Configurer les événements
-        initializeForm();
-
         // Signaler que les données sont prêtes
         document.dispatchEvent(new Event('dataReady'));
     } catch (error) {
@@ -105,44 +102,6 @@ const renderCategories = (categories) => {
         };
         link.classList.add("subcat");
         filterMenu.appendChild(link);
-    });
-};
-
-// Fonction pour configurer le formulaire d'ajout de projet
-const initializeForm = () => {
-    const form = document.querySelector("#addProjectForm");
-    const errorDiv = document.querySelector("#formError");
-
-    if (!form) {
-        console.error("Formulaire introuvable dans le DOM.");
-        return;
-    }
-
-    form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        errorDiv.textContent = "";
-
-        const formData = new FormData(form);
-        try {
-            const response = await fetch("http://localhost:5678/api/works", {
-                method: "POST",
-                body: formData,
-                headers: {
-                    Authorization: getAuthorization(),
-                },
-            });
-
-            if (!response.ok) {
-                throw new Error("Erreur lors de l'ajout du projet");
-            }
-
-            const newWork = await response.json();
-            allWorks.push(newWork);
-            renderGallery(allWorks);
-            form.reset();
-        } catch (error) {
-            errorDiv.textContent = error.message;
-        }
     });
 };
 
