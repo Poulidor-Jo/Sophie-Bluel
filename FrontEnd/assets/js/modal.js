@@ -266,6 +266,7 @@ const uploadImage = () => {
         const validFormats = ["image/jpeg", "image/png"];
         if (!validFormats.includes(file.type)) {
             alert("Format de fichier non valide. Veuillez télécharger une image au format JPG ou PNG.");
+            resetAddWorkModal();
             return;
         }
 
@@ -273,6 +274,7 @@ const uploadImage = () => {
         const maxSize = 4 * 1024 * 1024; // 4 Mo
         if (file.size > maxSize) {
             alert("Le fichier est trop volumineux. La taille maximale autorisée est de 4 Mo.");
+            resetAddWorkModal(); 
             return;
         }
 
