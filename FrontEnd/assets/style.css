@@ -142,7 +142,6 @@ li:hover {
 
 #introduction img {
 	display: block;
-	margin: auto;
 	width: 80%;
 }
 
@@ -241,7 +240,7 @@ footer nav ul {
 }
 
 .subcat {
-	width: 20%;
+	width: auto;
 	height: 37px;
 	text-decoration: none;
 	background: white;
@@ -259,6 +258,7 @@ footer nav ul {
 	text-align: center;
 	color: #1D6154;
 	background-color: white;
+	padding: 0 20px;
 }
 .subcat:hover {
 	background-color: #1D6154;
