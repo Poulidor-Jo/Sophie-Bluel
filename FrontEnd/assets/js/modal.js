@@ -43,6 +43,7 @@ function resetAddWorkModal() {
     const alert = document.getElementById('alertAdd');
     alert.style.display = "none";
     uploadContent.classList.remove("hide-icon"); // Réafficher l'icône de prévisualisation
+    document.getElementById("btnImage").style.display = "block"; // Réafficher le bouton "Ajouter photo"
 }
 
 // Fonction pour fermer la modal galerie
@@ -284,6 +285,8 @@ const uploadImage = () => {
         reader.onload = (event) => {
             image.src = event.target.result;
             image.alt = file.name.split(".")[0];
+            image.style.cursor = "pointer"; // Ajouter un curseur pointeur pour indiquer que l'image est cliquable
+            image.addEventListener("click", () => uploadImageInput.click()); // Ajouter un événement click pour déclencher l'input de fichier
         };
 
         reader.readAsDataURL(file);
@@ -297,8 +300,9 @@ const uploadImage = () => {
         projectUpload.innerHTML = ''; // Nettoyer avant d'ajouter une nouvelle image
         projectUpload.appendChild(image);
 
-        // Masquer l'icône de prévisualisation
+        // Masquer l'icône de prévisualisation et le bouton "Ajouter photo"
         uploadContent.classList.add("hide-icon");
+        document.getElementById("btnImage").style.display = "none";
     }
 
     // Mettre à jour l'état du bouton de soumission
@@ -308,3 +312,6 @@ const uploadImage = () => {
 // Écouteurs d'événements pour gérer l'upload de photos et l'envoi du formulaire
 uploadImageInput.addEventListener("change", uploadImage);
 addProjectForm.addEventListener("submit", trySendForm);
+
+// Ajouter un événement click à l'élément de prévisualisation pour déclencher l'input de fichier
+projectUpload.addEventListener("click", () => uploadImageInput.click());

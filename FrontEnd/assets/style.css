@@ -604,6 +604,7 @@ figcaption {
 #previewImage img {
 	max-width: 100%;
 	max-height: 100%;
+	cursor: pointer; /* Ajouter un curseur pointeur pour indiquer que l'image est cliquable */
 }
 
 #previewDetails {
@@ -692,3 +693,9 @@ figcaption {
 	align-items: center;
 }
 /* Fin Modal */
+
+/* Styles pour améliorer l'accessibilité */
+a:focus, button:focus, input:focus, select:focus, textarea:focus {
+	outline: 2px solid #1D6154;
+	outline-offset: 2px;
+}
