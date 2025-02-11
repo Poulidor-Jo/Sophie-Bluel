@@ -675,7 +675,7 @@ figcaption {
 }
 
 .AjoutDetail input, .AjoutDetail select {
-	width: 80%;
+	width: 100%;
 }
 
 .AjoutDetail select {
