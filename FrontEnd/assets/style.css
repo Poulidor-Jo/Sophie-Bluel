@@ -259,36 +259,14 @@ footer nav ul {
 	color: #1D6154;
 	background-color: white;
 	padding: 0 20px;
-}
-.subcat:hover {
-	background-color: #1D6154;
-	color: white;
+	transition: background-color 0.3s, color 0.3s; /* Ajout de la transition */
+	cursor: pointer; /* Ajout du curseur pointeur */
 }
 
-.subcat:active {
-	background-color: #1D6154;
-	width: 100%;
-	height: 37px;
-	line-height: 28px;
-	text-decoration: none;
-	color: white;
-	border: 1px solid #1D6154;
-	border-radius: 60px;
-	text-align: center;
-	display: block;
-	justify-content: space-between;
-	margin-left: 20px;
-	font-family: 'Syne';
-	font-style: normal;
-	font-weight: 700;
-	font-size: 16px;
-	line-height: 34px;
-	text-align: center;
-}
-
-.subcat:focus {
+.subcat:hover, .subcat:focus, .subcat:active {
 	background-color: #1D6154;
 	color: white;
+	outline: none; /* Supprime le contour par défaut */
 }
 
 .submenu {
